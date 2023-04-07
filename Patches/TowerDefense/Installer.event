@@ -1,0 +1,35 @@
+#ifndef callHackNew 
+	#define callHackNew(offset) 		"BYTE $01 $4B $9E $46 $00 $F8 $01 $E0; POIN (offset|0x1); PROTECT CURRENTOFFSET-12 CURRENTOFFSET-1"
+#endif 
+
+#include "AI_TowerDefense.lyn.event" 
+#include "Ch0_Map.event"  
+#include "Ch0.event" 
+
+#include "_FE8EssentialFixes.event" 
+#include "TileCallEvent/Installer.event" 
+#include "ResetPlayerCoordHook.lyn.event" 
+
+
+
+
+PUSH 
+ORG $39F10 
+callHackNew(SavePlayerCoord)
+ORG $3A620 // in proc CpPerform LoopRoutine WaitAction 
+callHackNew(ResetPlayerCoord)
+
+ORG $39B30 
+SHORT $2004 // ai to act even if they have moved already 
+//ORG $18694 
+//callHackNew(
+
+//ORG $59AB2C 
+
+//ORG $59AF84 // this is at the start of NewgProc_PhaseSwitchGfx in EngineHacks\Necessary\CalcLoops\TurnLoop
+//POIN NewPlayerPhase_HandleAutoEnd // in Procs PlayerPhase - PhaseSwitchGfx 59AF80 - 801DBA5 PlayerPhase_HandleAutoEnd
+
+POP 
+
+
+
