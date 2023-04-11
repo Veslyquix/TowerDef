@@ -1,7 +1,7 @@
 #include "LordSplitMenu/Installer.event" 
 #include "TowerDefense/Installer.event" 
 #include "SwapUnitID/Installer.event" 
-
+#include "ModularGoalWindow/Installer.event" 
 
 
 

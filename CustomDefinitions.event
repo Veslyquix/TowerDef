@@ -4,6 +4,22 @@
 #define ChapterTileset(chapter, object, palette, config) "PUSH; ORG 0x8b0890 + (148* chapter) + 4; SHORT object; BYTE palette config; POP"
 #define ChapterTileAnims(chapter, anim1, anim2) "PUSH; ORG 0x8b0890 + (148* chapter) + 9; BYTE anim1 anim2; POP"
 // 
+
+
+#define EnemyCavalier 6 
+#define EnemyKnight 0xA 
+#define EnemyMercenary 0x10 
+#define EnemyMyrmidon 0x14 
+#define EnemyArcher 0x1A 
+#define EnemyWyvern 0x20 
+#define EnemyMage 0x26 
+#define EnemyShaman 0x2e 
+#define EnemyBrigand 0x41 
+#define EnemyFighter 0x6d 
+#define EnemyMonk 0x6e 
+#define EnemyPirate 0x6f 
+#define EnemySoldier 0x4e 
+
 #ifndef ItemTable
   #define ItemTable 0x809B10
 #endif

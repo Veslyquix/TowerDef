@@ -1,0 +1,75 @@
+
+
+// Useful Vanilla ASMCs 
+#define StartGameOver "ASMC 0x800D391" // Game over ASMC 
+#define EndMMS "ASMC 0x80790a5" //MU_EndAll //deselect unit
+#define PromoteActiveUnit "ASMC 0x080CCA15" //NewPromotion
+#define EndTurn "ASMC 0x80225F9" // ChMenu "End" to end player phase 
+#define ReturnToMapBGM "ASMC 0x80160D1" // Return to map BGM 
+#define ReorderParty "ASMC 0x080956d9" // Reorder player units 
+#define QuickSave "ASMC 0x80B5D5D"
+#define RefreshSMS "ASMC 0x8026689" //SMS_Init - refresh SMS OBJ space in case we've exceeded because >16 'mons 
+
+
+// Text 
+#define TutText(text) "SVAL 0xB 0xFFFFFFFF; TUTORIALTEXTBOXSTART; TEXTSHOW text; TEXTEND; REMA" // Centered 
+#define TutText_B(text) "SVAL 0xB 0x00B0FFFF; TUTORIALTEXTBOXSTART; TEXTSHOW text; TEXTEND; REMA" // Bottom-Centered 
+#define TutText_M(text) "SVAL 0xB 0x280028; TUTORIALTEXTBOXSTART; TEXTSHOW text; TEXTEND; REMA" // Bottom-Centered 
+#define TutTextAutoFade(background,textID) "MUSI; SMOV 0x2 background; CALL $9EE2E8; TutText(textID); MUNO; CALL $9EE2C4"
+#define TutText(background,textID) "MUSI; SMOV 0x2 background; CALL $9EE2E8; TutText(textID); MUNO"
+
+
+#define WallText(text) "SVAL 0xB 0xFFFFFFFF; SOLOTEXTBOXSTART; TEXTSHOW text; TEXTEND; REMA" // Centered 
+#define BottomWallText(text) "SVAL 0xB 0x00B0FFFF; SOLOTEXTBOXSTART; TEXTSHOW text; TEXTEND; REMA" // Centered along bottom of screen 
+#define BottomWallS2Text "SVAL 0xB 0x00B0FFFF; SOLOTEXTBOXSTART; TEXTSHOW (-1); TEXTEND; REMA"
+#define CGText(text, BGIndex) "FlashBlack; ShowCG(BGIndex); CGTEXTSTART; TEXTSHOW text; TEXTEND; REMA; ClearBackgroundSmooth"
+
+// Useful vanilla events 
+#define ShowMap "CALL 0x8592140" // Fade from black if faded in & clean background if any 
+#define WarpOutEvent "CALL 0x89EE51C" // slot 2 unit ID is warped out and REMU'd 
+
+// Debugging 
+#define Break "CALL 0x89EE1D4" // ENDB and unsets completion flag of event 
+#define Halt "ShowMap; Text(DebugTextHere)"
+#define Stop "ShowMap; Text(DebugTextHere)"
+#define StopHere "ShowMap; Text(DebugTextHere)" // duplicates for when I forget the name lol 
+//#define StopHere "CUMO (-1); EVBIT_F 2; STAL 45; CURE" // no text but waits 45 frames 
+
+// Helpers 
+#define Coord(XX,YY) "YY<<16|XX" 
+// impossible allegiance of 5 if current hp is 0 
+#define PlayerInRange "CALL CheckIfPlayerInRange"
+#define NPCInRange "SVAL r2 1; CALL 0x89EE1B8" 
+#define EnemyInRange "SVAL r2 2; CALL 0x89EE1B8" 
+#define Area(LowerX, LowerY, UpperX, UpperY) "LowerX<<24|LowerY<<16|UpperX<<8|UpperY"
+#define Range(LowerX, LowerY, UpperX, UpperY) "LowerX<<24|LowerY<<16|UpperX<<8|UpperY"
+
+
+
+#define GiveItemWithDurability2(UnitID, Item, Durability) "CALL $591F40; SMOV 0x3 (Durability<<8)|Item ; GIVEITEMTO UnitID"
+#define GiveItemWithDurability2(UnitID) "SVAL r1 8; SLSL r4 r4 r1; SADD r3 r3 r4; CALL $591F40; GIVEITEMTO UnitID" // s3 as item, s4 as durability 
+
+
+// this is at |2 addresses, not align-4. Needs to add +7 to lr at end. 
+#define jumpToHackNew(offset) "BYTE $FE $46 $00 $4B $18 $47; POIN (offset|0x1)" // requires you add +7 to your return address after you pop lr into a lo register 
+// this works with fe8u, fe8j etc. 
+#define callHackNew_r0(offset) 	"BYTE $01 $48 $86 $46 $00 $F8 $01 $E0; POIN (offset|0x1); PROTECT CURRENTOFFSET-12 CURRENTOFFSET-1"
+#define callHackNew_r1(offset) 	"BYTE $01 $49 $8E $46 $00 $F8 $01 $E0; POIN (offset|0x1); PROTECT CURRENTOFFSET-12 CURRENTOFFSET-1"
+#define callHackNew_r2(offset) 	"BYTE $01 $4A $96 $46 $00 $F8 $01 $E0; POIN (offset|0x1); PROTECT CURRENTOFFSET-12 CURRENTOFFSET-1"
+#define callHackNew(offset) 		"BYTE $01 $4B $9E $46 $00 $F8 $01 $E0; POIN (offset|0x1); PROTECT CURRENTOFFSET-12 CURRENTOFFSET-1"
+
+
+// Pokemblem stuff: 
+#define TrainerPostBattleTalk(char2) "CHAR 0 TrainerPostBattleTalkEvent [0x0, char2] 0"
+#define AllTrainersPostBattleTalk "TrainerPostBattleTalk(0xE0); TrainerPostBattleTalk(0xE1); TrainerPostBattleTalk(0xE2); TrainerPostBattleTalk(0xE3); TrainerPostBattleTalk(0xE4); TrainerPostBattleTalk(0xE5); TrainerPostBattleTalk(0xE6); TrainerPostBattleTalk(0xE7); TrainerPostBattleTalk(0xE8); TrainerPostBattleTalk(0xE9); TrainerPostBattleTalk(0xEA); TrainerPostBattleTalk(0xEB); TrainerPostBattleTalk(0xEC); TrainerPostBattleTalk(0xED); TrainerPostBattleTalk(0xEE); TrainerPostBattleTalk(0xEF)" 
+#define GiveSkillAccessory(UnitID, SkillID) "SVAL r1 0xC0; SVAL r3 SkillID; SAND r1 r1 r3; SVAL r3 6; SLSR r1 r1 r3; SVAL r3 Ves_SkillBlockOne_ItemID; SADD r1 r3 r1; SVAL r4 0x3F; SVAL r3 SkillID; SAND r3 r4 r3; SVAL r4 8; SLSL r3 r3 r4; SADD r3 r3 r1; CALL $591F40; GIVEITEMTO UnitID"
+// SVAL r5 *SkillID of accessory to give* 
+#define GiveSkillAccessory(UnitID) "SVAL r1 0xC0; SADD r3 r5 r0; SAND r1 r1 r3; SVAL r3 6; SLSR r1 r1 r3; SVAL r3 Ves_SkillBlockOne_ItemID; SADD r1 r3 r1; SVAL r4 0x3F; SADD r3 r5 r0; SAND r3 r4 r3; SVAL r4 8; SLSL r3 r3 r4; SADD r3 r3 r1; CALL $591F40; GIVEITEMTO UnitID"
+
+// Silent give skill accessory also equips it 
+#define SilentGiveSkillAccessory(UnitID, SkillID) "SVAL r1 0xC0; SVAL r3 SkillID; SAND r1 r1 r3; SVAL r3 6; SLSR r1 r1 r3; SVAL r3 Ves_SkillBlockOne_ItemID; SADD r1 r3 r1; SVAL r4 0x3F; SVAL r3 SkillID; SAND r4 r4 r3; SVAL r5 0x80; SADD r4 r4 r5; SADD r3 r1 r0; SVAL r1 UnitID; ASMC SilentGiveItemWithDurability" 
+
+#define EquipNewSkillAccessory(UnitID, SkillID) "SVAL r1 0xC0; SVAL r3 SkillID; SAND r1 r1 r3; SVAL r3 6; SLSR r1 r1 r3; SVAL r3 Ves_SkillBlockOne_ItemID; SADD r1 r3 r1; SVAL r4 0x3F; SVAL r3 SkillID; SAND r3 r4 r3; SVAL r4 0x80; SADD r3 r3 r4; SVAL r4 8; SLSL r3 r3 r4; SADD r3 r3 r1; CALL $591F40; GIVEITEMTO UnitID"
+//#define SilentEquipNewSkillAccessory(UnitID, SkillID) "SVAL r1 0xC0; SVAL r3 SkillID; SAND r1 r1 r3; SVAL r3 6; SLSR r1 r1 r3; SVAL r3 Ves_SkillBlockOne_ItemID; SADD r1 r3 r1; SVAL r4 0x3F; SVAL r3 SkillID; SAND r4 r4 r3; SVAL r5 0x80; SADD r4 r4 r5; SADD r3 r1 r0; SVAL r1 UnitID; ASMC SilentGiveItemWithDurability" 
+
+

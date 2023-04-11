@@ -281,6 +281,7 @@ V3.4
 
 
 #ifdef _FE8_
+#include "Added_Macros_by_Vesly.event" 
 #ifndef _NO_FE8_DEFINITIONS_
 #include "EAStandardLibrary/FE8 Definitions.txt"
 #endif

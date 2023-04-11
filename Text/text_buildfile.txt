@@ -1,4 +1,25 @@
 
+# 0x3F9 
+100 Gold[X]
+# 0x3FA 
+250 Gold[X]
+# 0x3FB 
+500 Gold[X]
+# 0x3FC 
+750 Gold[X]
+# 0x3FD 
+1000 Gold[X]
+# 0x400 
+2000 Gold[X]
+# 0x401 
+3000 Gold[X]
+
+# 0x213 
+Unit[X]
+
+# 0x26F
+A generic soldier.[X]
+
 # 0x0002 textWeaponRankIncreasedTo
  Weapon rank increased to [X]
 
@@ -137,32 +158,33 @@ Magic users[X]
 ## BuyFighter
 1500g - Fighter[X]
 ## BuyKnight
-1500g - Knight[X]
+1200g - Knight[X]
 ## BuyMyrmidon
-1500g - Myrmidon[X]
+1200g - Myrmidon[X]
 ## BuyArcher
-1500g - Archer[X]
+1000g - Archer[X]
 
 
 ## BuyCavalier
-1500g - Cavalier[X]
+1800g - Cavalier[X]
 ## BuyPegasi
-1000g - Pegasus Knight[X]
+1200g - Pegasus Knight[X]
 ## BuyWyvern
-1500g - Wyvern Rider[X]
+2200g - Wyvern Rider[X]
 ## BuyManakete
-1500g - Manakete[X]
+2500g - Manakete[X]
 
 ## BuyMage
-1000g - Mage[X]
+1500g - Mage[X]
 ## BuyShaman
-1000g - Shaman[X]
+1200g - Shaman[X]
 ## BuyMonk
 1000g - Monk[X]
 ## BuyCleric
 1000g - Cleric[X]
 
-
+## LowFunds
+You'll need more funds.[A][X]
 
 
 

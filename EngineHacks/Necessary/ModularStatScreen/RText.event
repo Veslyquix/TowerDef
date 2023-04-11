@@ -64,7 +64,7 @@
   PUSH
   
     ORG $889D8
-      POIN RText_Page1
+      //POIN RText_Page1
     ORG 0x889E0
       POIN RText_Page2
     ORG 0x889F8

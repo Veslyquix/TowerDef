@@ -36,6 +36,13 @@ ldr r3, [r3] @ Char table unit 0
 add r0, r3 @ Character table entry 
 str r0, [r5] @ change unit pointer 
 
+
+ldr r3, =MemorySlot 
+ldrh r0, [r3, #4*0x0C]
+ldrh r1, [r3, #4*0x0C+2]
+strb r0, [r5, #0x10] 
+strb r1, [r5, #0x11] 
+
 	blh  0x0801a1f4   @RefreshFogAndUnitMaps
 	blh  0x080271a0   @SMS_UpdateFromGameData
 	blh  0x08019c3c   @UpdateGameTilesGraphics

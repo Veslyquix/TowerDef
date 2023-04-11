@@ -113,7 +113,7 @@
 // If uncomented, ModularEXP will be implemented.
 // Go to "ModularEXP/ModularEXP.event" and "Tables/FE8 Nightmare modules/Misc/Modular EXP Class Table.csv" to edit experience gains.
 // This patch normally conflicts with Paragon, but installing here remedies this.
-// #define MODULAR_EXP
+#define MODULAR_EXP
 
 // If uncommented, PortraitSelectionASM will be implemented.
 // Go to "PortraitSelectionASM/PortraitSelectionASM.event" to configure your modular portrait options.
@@ -168,13 +168,13 @@
 // If uncommented, the fourth page of the stat screen will include personal information on the character.
 // This information can be edited in the "Personal Data Editor.csv" file.
 // This will automatically enable Narrow Font.
-#define ENABLE_PERSONAL_INFO
+//#define ENABLE_PERSONAL_INFO
 
 // If uncommented, the third page of the stat screen will only show weapon ranks that the unit has a rank in.
 #define ONLY_SHOW_USED_RANKS
 
 // If uncommented, the second page of the stat screen will display data of map-based ballista in the inventory.
-#define QOL_STAT_SCREEN_BALLISTA
+//#define QOL_STAT_SCREEN_BALLISTA
 
 // If uncommented, Gaiden Magic 2.0 will be enabled.
 // Set spell lists in ExternalHacks/GaidenMagic/GaidenSpellLists.event.
@@ -360,7 +360,7 @@
 #define METIS_TOME_BOOST 5
 
 //If true, growths will be calculated as (char growth + class growth).
-#define USE_CHAR_AND_CLASS_GROWTHS False
+#define USE_CHAR_AND_CLASS_GROWTHS True
 
 //The growth rate ranges for each stat color and the colors themselves can be edited in
 //Necessary/MSS/DisplayGrowthsOptions/GrowthColorsTable.event and NewPalette.event, respectively.
