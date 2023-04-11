@@ -39,7 +39,7 @@ TileChange1:
 ALIGN 4
 MapChangesData:
   TileMap(0, 8, 7, 3, 1, TileChange0)
-  TileMap(1, 13, 2, 1, 1, TileChange1)
+  TileMap(1, 13, 2, 1, 1, 0x65, TileChange1)
   TileMapEnd
 
 EventPointerTable(6, MapChangesData)

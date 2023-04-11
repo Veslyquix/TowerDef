@@ -67,13 +67,14 @@ void NewCpOrderFunc_BeginDecide(Proc* proc)
 	int unitAmt = 0; 
 	if (gChapterData.currentPhase>>7) { // on enemy phase only 
 		RefreshFaction(0); // refresh players 
-		RefreshFaction(1); // refresh NPCs  
+		RefreshFaction(0x40); // refresh NPCs 
+		RefreshFaction(0x80); // refresh enemies 
 		unitAmt = BuildAiUnitListAll(); // for current phase 
 	} 
 
     if (unitAmt != 0)
     {
-        //SortAiUnitList(unitAmt);
+        SortAiUnitList(unitAmt);
 
         gAiState.units[unitAmt] = 0;
         gAiState.unitIt = gAiState.units;
@@ -87,20 +88,25 @@ void NewCpOrderFunc_BeginDecide(Proc* proc)
 	//	RefreshFaction(0); 
 	//} 
 }
+
+
+
+
 // 18890 
 // 39E2C AiDecisionMaker_AiScript2 
 // 39B88 in CpDecide_Main at 39B00 
 
 int BuildAiUnitListAll(void)
 {
-    int i, aiNum = 0;
+	int aiNum = 0; 
+    int phaseNum = false;
     u32* prioIt = sUnitPriorityArray;
-
+	
     //int factionUnitCountLut[3] = { 62, 20, 50 }; // TODO: named constant for those
 
     //for (i = 0; i < factionUnitCountLut[faction >> 6]; ++i)
-	for (int c = 0; c<25; c++) { 
-		for (i = 0; i < 0xC0; ++i)
+	//for (int c = 0; c<25; c++) { 
+		for (int i = 0; i < 0xBF; ++i)
 		{
 			if (aiNum > 120) break; 
 			//struct Unit* unit = GetUnit(faction + i + 1);
@@ -115,8 +121,9 @@ int BuildAiUnitListAll(void)
 			if (unit->statusIndex == UNIT_STATUS_BERSERK)
 				continue;
 
-			if (unit->state & (US_HIDDEN | US_DEAD | US_RESCUED | US_HAS_MOVED_AI)) // | US_UNSELECTABLE
+			if (unit->state & (US_NOT_DEPLOYED | US_DEAD | US_RESCUED | US_HAS_MOVED_AI)) // | US_UNSELECTABLE
 				continue;
+			if ((unit->index & 0xC0) == gChapterData.currentPhase) phaseNum = true; 
 
 			//gAiState.units[aiNum] = faction + i + 1;
 			gAiState.units[aiNum] = i + 1;
@@ -124,9 +131,9 @@ int BuildAiUnitListAll(void)
 
 			aiNum++;
 		}
-	} 
 
-    return aiNum;
+	if (phaseNum) return aiNum; 
+    return false;
 }
 
 #define UNIT_IS_VALID(aUnit) ((aUnit) && (aUnit)->pCharacterData)

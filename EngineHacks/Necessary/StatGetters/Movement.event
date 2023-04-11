@@ -10,6 +10,7 @@ pMovModifiers: // Movement
 	#ifdef STAIRS_ASM
 	POIN StairsMoveDebuff
 	#endif
+	POIN HalfMovementOnEnemyPhase
 	POIN prNullifyIfFreeze prNullifyIfGuardAI
 	#ifdef DEBUFFS_MIN_ZERO
 	POIN prMinZero

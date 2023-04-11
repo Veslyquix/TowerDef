@@ -1,4 +1,5 @@
-
+# 0x2bf
+Wall[X]
 # 0x3F9 
 100 Gold[X]
 # 0x3FA 
@@ -186,5 +187,14 @@ Magic users[X]
 ## LowFunds
 You'll need more funds.[A][X]
 
+## IntroText
+Press [ToggleRed]A[ToggleRed] on a fort to purchase[N]
+units and defend your castle.[A][N]
+All units will act on Enemy Phase until[N]
+there are no enemies left, so watch out![A][N]
+If your castle is destroyed or all[N]
+your units die, you lose.[A][N]
+Please note that enemies[N]
+are randomized.[A][X]
 
 

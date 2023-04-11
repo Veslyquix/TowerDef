@@ -82,14 +82,15 @@ pop {r0}
 bx r0 
 .ltorg 
 
-
+	.equ GetUnit, 0x8019430
 .global CountHalfPlayers 
 .type CountHalfPlayers, %function 
 CountHalfPlayers: 
 push {lr} 
 mov r0, #0 
 blh GetPhaseAbleUnitCount 
-lsr r0, #1 @ half 
+add r0, #1 
+lsr r0, #1 @ half rounded up 
 add r0, #1 
 ldr r3, =MemorySlot 
 str r0, [r3, #4*0x0C] 
@@ -97,6 +98,97 @@ pop {r0}
 bx r0 
 .ltorg 
 
+.global MaybeClearNextAIActor
+.type MaybeClearNextAIActor, %function 
+MaybeClearNextAIActor:
+push {r4-r6, lr} 
+ldr r3, =0x202BCF0 @ gChData 
+ldrb r0, [r3, #0x0F] 
+cmp r0, #0 
+beq Exit_ClearNextAi 
+ldr r0, =0x203A56C
+ldr r1, =0x8807164 
+ldr r0, [r0] 
+cmp r0, r1 
+bne ContinueNormal 
+bl ClearAiList @ after attacking the wall, end the turn 
+b Exit_ClearNextAi 
 
+ContinueNormal: 
+ldr r4, =0x203AA78 @ poin to the next actor 
+ldr r5, [r4] 
+cmp r5, #0 
+beq MakeNewList 
+ldrb r0, [r5] 
+cmp r0, #0 
+beq MakeNewList 
 
+ldr r6, =0x1000C @ escaped, undeployed, dead 
+ClearStuffLoop: 
+cmp r5, r4 
+@bgt Exit_ClearNextAi 
+bgt MakeNewList 
+ldrb r0, [r5] 
+blh GetUnit 
+cmp r0, #0 
+beq NextClearLoop
+ldr r1, [r0] 
+cmp r1, #0 
+beq NextClearLoop
+ldr r1, [r0, #0x0C] 
+tst r1, r6 
+bne NextClearLoop 
+str r5, [r4] 
+b Exit_ClearNextAi
+
+NextClearLoop: 
+add r5, #1 
+b ClearStuffLoop
+ 
+MakeNewList: 
+bl ClearAiList 
+mov r0, #0 
+bl RefreshFaction
+mov r0, #0x40 
+bl RefreshFaction 
+mov r0, #0x80 
+bl RefreshFaction 
+bl BuildAiUnitListAll
+ldr r3, =0x203AA04 
+str r3, [r4] 
+Exit_ClearNextAi: 
+pop {r4-r6} 
+pop {r0} 
+bx r0 
+.ltorg 
+
+ClearAiList:
+mov r0, #0 
+ldr r3, =0x203AA04 
+ldr r2, =0x203AA78 
+SomeLoop: 
+str r0, [r3] 
+add r3, #4 
+cmp r3, r2 
+blt SomeLoop 
+bx lr 
+
+.global HalfMovementOnEnemyPhase
+.type HalfMovementOnEnemyPhase, %function 
+HalfMovementOnEnemyPhase:
+push {lr} 
+ldr r3, =0x202BCF0 @ gChData 
+ldrb r2, [r3, #0x0F] 
+cmp r2, #0 
+beq DoNothing 
+ldrb r2, [r1, #0x0B] 
+lsr r2, #7 
+cmp r2, #0 
+bne DoNothing @ enemies don't have reduced mvt 
+lsr r0, #1 
+
+DoNothing: 
+pop {r1} 
+bx r1 
+.ltorg 
 

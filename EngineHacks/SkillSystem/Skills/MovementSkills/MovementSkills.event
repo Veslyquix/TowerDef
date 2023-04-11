@@ -2,12 +2,12 @@ PUSH
 
 //Acrobat
 ORG $1A4CC
-jumpToHack(AcrobatCheck)
+//jumpToHack(AcrobatCheck)
 
 //Pass
 ORG $800 //modifies movement ARM code
-WORD 0xE59FC000 0xE12FFF1C //ldr r12,Pass; bx r12
-POIN PassCheck|1
+//WORD 0xE59FC000 0xE12FFF1C //ldr r12,Pass; bx r12
+//POIN PassCheck|1
 
 POP
 
