@@ -19,7 +19,9 @@ $RECYCLE.BIN/
 
 # rom stuff
 *.gba
-*.ups
+SkillsTest.ups
+*.gba.7z
+*.bak
 *.sav
 *.sgm
 *.ss1

@@ -1,0 +1,16 @@
+HookButtonPressA=$1002A41
+TerrainTryCallEvent=$1002A71
+TerrainExecuteEventList=$1002C30
+CommonEvent=$1002CCC
+FadoEvent=$1002CD8
+FadaEvent=$1002CE8
+FadeEvent=$1002D08
+FaduEvent=$1002D28
+FadiEvent=$1002D48
+OtherEvent1=$1002D68
+OtherEvent2=$1002D88
+OtherEvent3=$1002DA8
+OtherEvent4=$1002DC8
+OtherEvent5=$1002DE8
+OtherEvent6=$1002E08
+OtherEventFinal=$1002E28

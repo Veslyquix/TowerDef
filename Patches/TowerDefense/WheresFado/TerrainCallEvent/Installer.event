@@ -1,0 +1,127 @@
+#include "eastdlib.event" 
+#include "HookButtonPress.lyn.event" 
+#include "TerrainCallEvent.lyn.event" 
+
+#ifndef callHackNew 
+	#define callHackNew(offset) 		"BYTE $01 $4B $9E $46 $00 $F8 $01 $E0; POIN (offset|0x1)"
+#endif 
+
+PUSH 
+ORG $1CA30
+callHackNew(HookButtonPressA) // in Procs PlayerPhase - mainLoop 
+POP 
+
+
+ALIGN 4 
+TerrainExecuteEventList: 
+// ChapterID (0xFF = any) 
+// Terrain (0 = any) 
+// UnitID (0 = any) 
+// ClassID (0 = any) 
+// TrapID (0 = any) 
+// Padding (does nothing) 
+// CompletionFlag (0 = never complete)  
+// EventLabel 
+BYTE 0xFF 0 	0xC5 0 0 0; SHORT 0; POIN FadoEvent; // In any chapter, pressing A on a ballista (0x1) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0x6D 0 0 0; SHORT 0; POIN FadaEvent; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xCB 0 0 0; SHORT 0; POIN FadeEvent; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xC8 0 0 0; SHORT 0; POIN FaduEvent; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xC7 0 0 0; SHORT 0; POIN FadiEvent; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xFF 0 0 0; SHORT 0xA; POIN OtherEvent1; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xFF 0 0 0; SHORT 0xB; POIN OtherEvent2; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xFF 0 0 0; SHORT 0xC; POIN OtherEvent3; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xFF 0 0 0; SHORT 0xD; POIN OtherEvent4; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xFF 0 0 0; SHORT 0xE; POIN OtherEvent5; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xFF 0 0 0; SHORT 0xF; POIN OtherEvent6; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+BYTE 0xFF 0 	0xFF 0 0 0; SHORT 0; POIN OtherEventFinal; // In any chapter, pressing A on a player tent (0x79) will show the event if completion flag A is off. 
+
+//BYTE 0xFF 0xA 	0 0 0 0; SHORT 0x8; POIN SomeEvent; // In any chapter, pressing A on a fort (0xA) will show the event if completion flag 8 is off. 
+WORD 0xFFFFFFFF 0xFFFFFFFF 0xFFFFFFFF // Terminator 
+
+// needs to occur only on enemy units if all 0s 
+
+ALIGN 4 
+
+
+ALIGN 4 
+CommonEvent:
+VCWF 4 
+NoFade 
+ENDA 
+
+ALIGN 4 
+FadoEvent: 
+CALL 0x89EF164
+NoFade 
+ENDA 
+ALIGN 4 
+FadaEvent: 
+Text(0x950)
+CALL CommonEvent
+NoFade 
+ENDA 
+ALIGN 4 
+FadeEvent: 
+Text(0x951)
+CALL CommonEvent
+NoFade 
+ENDA 
+ALIGN 4 
+FaduEvent: 
+Text(0x952)
+CALL CommonEvent
+NoFade 
+ENDA 
+ALIGN 4 
+FadiEvent: 
+Text(0x953)
+CALL CommonEvent
+NoFade  
+ENDA 
+
+ALIGN 4 
+OtherEvent1: 
+Text(0x954)
+CALL CommonEvent
+NoFade 
+ENDA 
+ALIGN 4 
+OtherEvent2: 
+Text(0x955)
+CALL CommonEvent
+NoFade 
+ENDA 
+ALIGN 4 
+OtherEvent3: 
+Text(0x956)
+CALL CommonEvent
+NoFade 
+ENDA 
+ALIGN 4 
+OtherEvent4: 
+Text(0x957)
+CALL CommonEvent
+NoFade 
+ENDA 
+ALIGN 4 
+OtherEvent5: 
+Text(0x958)
+CALL CommonEvent
+NoFade 
+ENDA 
+ALIGN 4 
+OtherEvent6: 
+Text(0x959)
+CALL CommonEvent
+NoFade 
+ENDA 
+
+
+
+
+ALIGN 4 
+OtherEventFinal: 
+Text(0x95A)
+ASMC 0x80225F9 // EndTurn
+NoFade 
+ENDA 

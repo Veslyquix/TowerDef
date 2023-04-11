@@ -1,0 +1,5 @@
+RandomizePlayerCoords=$1001BAD
+RandomizeNPCCoords=$1001BC1
+RandomizeEnemyCoords=$1001BD5
+RandomizeCoords=$1001BE9
+RandomizeCoordsEvent=$1001D58
