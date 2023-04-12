@@ -5,7 +5,7 @@ INLINE ClassLevelUpSkillTable,Skill Pointer
 0x03 Ephraim Great Lord,EphraimGreatLordSkillList|IsPointer
 0x04 Eirika Great Lord,EirikaGreatLordSkillList|IsPointer
 0x05 Cavalier,CavalierSkillList|IsPointer
-0x06 Cavalier (F),CavalierSkillList|IsPointer
+0x06 Cavalier (F),0x0
 0x07 Paladin,PaladinSkillList|IsPointer
 0x08 Paladin (F),PaladinSkillList|IsPointer
 0x09 Armour Knight,KnightSkillList|IsPointer
@@ -31,7 +31,7 @@ INLINE ClassLevelUpSkillTable,Skill Pointer
 0x1D Ranger,RangerSkillList|IsPointer
 0x1E Ranger (F),RangerSkillList|IsPointer
 0x1F Wyvern Rider,WyvernRiderSkillList|IsPointer
-0x20 Wyvern Rider (F),WyvernRiderSkillList|IsPointer
+0x20 Wyvern Rider (F),0x0
 0x21 Wyvern Lord,WyvernLordSkillList|IsPointer
 0x22 Wyvern Lord (F),WyvernLordSkillList|IsPointer
 0x23 Wyvern Knight,WyvernKnightSkillList|IsPointer

@@ -1,74 +1,74 @@
 INLINE PersonalSkillTable,Skill
 None,0x0
-Eirika,0x0
-Seth,0x0
-Gilliam,0x0
-Franz,0x0
-Moulder,0x0
-Vanessa,0x0
-Ross,0x0
-Neimi,0x0
-Colm,0x0
-Garcia,0x0
-Innes,0x0
-Lute,0x0
-Natasha,0x0
-Cormag,0x0
-Ephraim,0x0
-Forde,0x0
-Kyle,0x0
-Amelia,0x0
-Artur,0x0
-Gerik,0x0
-Tethys,0x0
-Marisa,0x0
-Saleh,0x0
-Ewan,0x0
-L'Arachel,0x0
-Dozla,0x0
-0,0x0
-Rennac,0x0
-Duessel,0x0
-Myrrh,0x0
-Knoll,0x0
-Joshua,0x0
-Syrene,0x0
-Tana,0x0
-Lyon,0x0
-Orson,0x0
-Glen,0x0
-Selena,0x0
-Valter,0x0
-Riev,0x0
-Caellach,0x0
-Fado,0x0
-Ismaire,0x0
-Hayden,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-0,0x0
-Lyon's Summon,0x0
-0,0x0
-0,0x0
-Knoll's Summon,0x0
-Ewan's Summon,0x0
-Lyon (Ch 17),0x0
-Morva (Ch 20),0x0
-Orson (Ch 5x),0x0
-Valter (Ch 15),0x0
-Selena (Ch 10B & 13B),0x0
-Valter (Prologue),0x0
+Eirika,DazzleID
+Seth,DazzleID
+Gilliam,DazzleID
+Franz,DazzleID
+Moulder,DazzleID
+Vanessa,DazzleID
+Ross,DazzleID
+Neimi,DazzleID
+Colm,DazzleID
+Garcia,DazzleID
+Innes,DazzleID
+Lute,DazzleID
+Natasha,DazzleID
+Cormag,DazzleID
+Ephraim,DazzleID
+Forde,DazzleID
+Kyle,DazzleID
+Amelia,DazzleID
+Artur,DazzleID
+Gerik,DazzleID
+Tethys,DazzleID
+Marisa,DazzleID
+Saleh,DazzleID
+Ewan,DazzleID
+L'Arachel,DazzleID
+Dozla,DazzleID
+0,DazzleID
+Rennac,DazzleID
+Duessel,DazzleID
+Myrrh,DazzleID
+Knoll,DazzleID
+Joshua,DazzleID
+Syrene,DazzleID
+Tana,DazzleID
+Lyon,DazzleID
+Orson,DazzleID
+Glen,DazzleID
+Selena,DazzleID
+Valter,DazzleID
+Riev,DazzleID
+Caellach,DazzleID
+Fado,DazzleID
+Ismaire,DazzleID
+Hayden,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+0,DazzleID
+Lyon's Summon,DazzleID
+0,DazzleID
+0,DazzleID
+Knoll's Summon,DazzleID
+Ewan's Summon,DazzleID
+Lyon (Ch 17),DazzleID
+Morva (Ch 20),DazzleID
+Orson (Ch 5x),DazzleID
+Valter (Ch 15),DazzleID
+Selena (Ch 10B & 13B),DazzleID
+Valter (Prologue),DazzleID
 Breguet (Ch 1),CounterMagicID
 Bone (Ch 2),AxefaireID
 Bazba (Ch 3),SwordbreakerID

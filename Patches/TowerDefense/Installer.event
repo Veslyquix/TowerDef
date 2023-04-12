@@ -10,14 +10,18 @@
 #include "TileCallEvent/Installer.event" 
 #include "ResetPlayerCoordHook.lyn.event" 
 
-
-
+#include "Extensions/AI Assembly.txt" 
 
 PUSH 
 ORG $39F10 
 callHackNew(SavePlayerCoord)
 ORG $3A620 // in proc CpPerform LoopRoutine WaitAction 
 callHackNew(ResetPlayerCoord)
+
+ORG $5A9060 // enemy ai2 
+Routine_AI(TryBreakWall, 0) 
+BYTE 0x03 0x00 0xFF 0; WORD 0x00000000; WORD 0x00000000; WORD 0x00000000 // Exit0 
+
 
 ORG $39B30 
 SHORT $2004 // ai to act even if they have moved already 

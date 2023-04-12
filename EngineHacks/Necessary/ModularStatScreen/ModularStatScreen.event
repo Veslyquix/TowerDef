@@ -110,14 +110,14 @@
   
   #ifndef USE_STRMAG_SPLIT
   
-  #include "pages/mss_page1_original.lyn.event" 
+  //#include "pages/mss_page1_original.lyn.event" 
   //#ifdef LEADERSHIP_STARS
 	//#include "pages/mss_page1_skills_leadership.lyn.event"
   //#else // LEADERSHIP_STARS
   //  #ifdef BIORHYTHM
 	//  #include "pages/mss_page1_skills_biorhythm.lyn.event"
 	//#else // BIORHYTHM
-	//  #include "pages/mss_page1_skills.lyn.event"
+	  #include "pages/mss_page1_skills.lyn.event"
 	//#endif // BIORHYTHM
   //#endif // LEADERSHIP_STARS
   

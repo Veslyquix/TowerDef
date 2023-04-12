@@ -101,7 +101,7 @@
 #define SpurMagID 160
 #define SpurSpdID 161
 #define SpurDefID 162
-#define SpurResID 163
+#define SpurResID 255
 
 //Tantivy: +10 Hit/Avoid if there are no allies within 3 tiles.
 //Author Unknown (Initial Commit)
@@ -125,11 +125,11 @@
 
 //Horseguard: +4 defense against horseback enemies if within 3 spaces of an ally horse rider.
 //By Sme
-#define HorseguardID 157
+#define HorseguardID 255
 
 //Armorboost: +4 attack and defense against armored enemies if within 3 spaces of an armored ally.
 //By Sme
-#define ArmorboostID 156
+#define ArmorboostID 255
 #define ArmorBoostID ArmorboostID //Alias\
 
 
@@ -137,7 +137,7 @@
 
 // Rally Chaos: At the start of your turn, perform a random rally. 
 // Author: Vesly 
-#define RallyChaosID 255
+#define RallyChaosID 157
 
 //Hoarder's Bane: At the end of your turn, consume a vulnerary from the supply if below full health.
 // Author: Vesly 
@@ -158,13 +158,13 @@
 
 // _ Taker: After attacking and defeating an enemy, gain +4 _. (Max +10) 
 // Author: Vesly 
-#define StrTakerID 255
+#define StrTakerID 79
 #define SklTakerID 255 
-#define SpdTakerID 255 
+#define SpdTakerID 156
 #define DefTakerID 255 
 #define ResTakerID 255 
 #define LukTakerID 255 
-#define MagTakerID 255 
+#define MagTakerID 163 
 #define MovTakerID 255 
 
 // Hone _ : At the start of your turn, give adjacent allies up to +3 _. 
@@ -217,7 +217,7 @@
 
 //Seal Skills: Debuff opponent's stat by 6 after combat. (Recover 1/turn)
 //Author Unknown (Initial Commit)
-#define SealStrID 79
+#define SealStrID 255
 #define SealSklID 81
 #define SealSpdID 82
 #define SealLukID 85

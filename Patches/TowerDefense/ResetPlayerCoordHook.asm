@@ -192,3 +192,52 @@ pop {r1}
 bx r1 
 .ltorg 
 
+.equ gCurrentUnit, 0x3004E50 
+.equ AiDecision, 0x203AA94
+.global TryBreakWall
+.type TryBreakWall, %function 
+TryBreakWall: 
+push {r4, lr} 
+
+ldr r0, =0x803D228 @ try attack snag/wall  
+mov lr, r0 
+ldr r0, =gCurrentUnit
+ldr r0, [r0] 
+add r0, #0x45
+ldrb r1, [r0] 
+.short 0xf800 
+
+
+mov r0, #1 @ true 
+ldr r2, =AiDecision 
+ldrh r2, [r2, #2] @ xxyy 
+ldr r3, =gCurrentUnit 
+ldr r3, [r3] 
+ldrh r1, [r3, #0x10] 
+cmp r2, r1 
+bne BreakWall 
+
+mov r0, #0xE
+add r3, #0x44 @ ai2 
+strb r0, [r3] 
+mov r0, #0 
+strb r0, [r3, #1] @ ai2 counter needs to be 0 
+
+
+ldr r2, =AiDecision 
+mov r1, #0 
+str r1, [r2]
+str r1, [r2, #4]
+str r1, [r2, #8]
+
+mov r0, #0 
+
+BreakWall: @ returns 1 true or 0 false 
+pop {r4} 
+pop {r1} 
+bx r1 
+.ltorg 
+
+
+
+

@@ -20,6 +20,7 @@ BYTE 00 00
 ALIGN 4
 
 CavalierSkillList:
+BYTE 1 ChargeID 
 BYTE 00 00
 
 PaladinSkillList:
@@ -74,6 +75,7 @@ BYTE 00 00
 ALIGN 4
 
 WyvernRiderSkillList:
+BYTE 01 SavageBlowID 
 BYTE 00 00
 ALIGN 4
 
@@ -157,6 +159,7 @@ BYTE 00 00
 ALIGN 4
 
 PegKnightSkillList:
+BYTE 01 MageSlayerID 
 BYTE 00 00
 ALIGN 4
 

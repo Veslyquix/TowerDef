@@ -189,12 +189,19 @@ You'll need more funds.[A][X]
 
 ## IntroText
 Press [ToggleRed]A[ToggleRed] on a fort to purchase[N]
-units and defend your castle.[A][N]
-All units will act on Enemy Phase until[N]
-there are no enemies left, so watch out![A][N]
+units and defend your castle.[N]
+You [ToggleRed]cannot attack[ToggleRed] on player phase.[A][Clear]
+On the action phase, players will[N]
+[ToggleRed]teleport back[ToggleRed] to their starting[N]
+position after attacking.[A][Clear]
+All units will [ToggleRed]continuously act[ToggleRed][N]
+on the Action Phase until there[N]
+are no enemies left, so watch out![A][Clear]
 If your castle is destroyed or all[N]
-your units die, you lose.[A][N]
-Please note that enemies[N]
-are randomized.[A][X]
+your units die, you lose.[A][Clear]
+Enemies are randomized.[N]
+Please enjoy.[A][X]
 
+## MGWTurnText
+Turn[X]
 

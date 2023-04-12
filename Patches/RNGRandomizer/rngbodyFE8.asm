@@ -32,7 +32,8 @@ beq Return
 bl bxr0
 
 Return:
-ldr r0, RandomizerReturnTo
+pop {r0} 
+@ldr r0, RandomizerReturnTo
 bx r0
 
 bxr0:

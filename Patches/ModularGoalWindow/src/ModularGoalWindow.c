@@ -79,11 +79,16 @@ void GoldTurnTextTemplate(struct GoalWindowProc* proc) {
     InsertNumber(&proc->textA, 0x36, TEXT_COLOR_BLUE, GetPartyGoldAmount());
     
     Text_Clear(&proc->textB);
-
-    //Works the same as InsertNumber, but with regular text
-    Text_InsertString(&proc->textB, 0xC, TEXT_COLOR_NORMAL, GetStringFromIndex(0x015D));
-    
-    InsertNumber(&proc->textB, 0x30, TEXT_COLOR_BLUE, gChapterData.turnNumber);
+	u16 textIndexB = MGWText[gChapterData.chapterIndex].indexB;
+    if (gChapterData.turnNumber < GetChapterDefinition(gChapterData.chapterIndex)->goalWindowEndTurnNumber) {
+        Text_InsertString(&proc->textB, 0x2, TEXT_COLOR_NORMAL, GetStringFromIndex(textIndexB));
+        InsertNumber(&proc->textB, 0x20, TEXT_COLOR_BLUE, gChapterData.turnNumber);
+        Text_InsertString(&proc->textB, 0x28, TEXT_COLOR_NORMAL, "/");
+        InsertNumber(&proc->textB, 0x38, TEXT_COLOR_BLUE, GetChapterDefinition(gChapterData.chapterIndex)->goalWindowEndTurnNumber);
+    }
+    else {
+        Text_InsertString(&proc->textB, 0xC, TEXT_COLOR_GREEN, GetStringFromIndex(0x01C3)); //Last Turn
+    }
     
     proc->bottomPadding = 1;
 }

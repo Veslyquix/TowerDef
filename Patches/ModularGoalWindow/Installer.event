@@ -1,6 +1,10 @@
 #include "Extensions/Hack Installation.txt"
 
-#define MGWText 0x9df 
+ALIGN 4 
+MGWText:
+SHORT MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText MGWTurnText 
+
+
 //C compiled stuff
 #include "src/ModularGoalWindow.lyn.event"
 #include "src/DrawTimeText.lyn.event"

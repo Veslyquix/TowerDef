@@ -123,7 +123,10 @@ int BuildAiUnitListAll(void)
 
 			if (unit->state & (US_NOT_DEPLOYED | US_DEAD | US_RESCUED | US_HAS_MOVED_AI)) // | US_UNSELECTABLE
 				continue;
-			if ((unit->index & 0xC0) == gChapterData.currentPhase) phaseNum = true; 
+			if ((unit->index & 0xC0) == gChapterData.currentPhase) { 
+				phaseNum = true; 
+				unit->ai2data = 0; 
+			}
 
 			//gAiState.units[aiNum] = faction + i + 1;
 			gAiState.units[aiNum] = i + 1;
