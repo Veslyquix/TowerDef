@@ -89,7 +89,6 @@ CountHalfPlayers:
 push {lr} 
 mov r0, #0 
 blh GetPhaseAbleUnitCount 
-add r0, #1 
 lsr r0, #1 @ half rounded up 
 add r0, #1 
 ldr r3, =MemorySlot 
@@ -215,13 +214,16 @@ ldr r3, =gCurrentUnit
 ldr r3, [r3] 
 ldrh r1, [r3, #0x10] 
 cmp r2, r1 
-bne BreakWall 
+beq DontBreakWall 
+b BreakWall 
 
+
+ 
+
+DontBreakWall: 
 mov r0, #0xE
-add r3, #0x44 @ ai2 
+add r3, #0x45 @ ai2 counter 
 strb r0, [r3] 
-mov r0, #0 
-strb r0, [r3, #1] @ ai2 counter needs to be 0 
 
 
 ldr r2, =AiDecision 
@@ -230,7 +232,28 @@ str r1, [r2]
 str r1, [r2, #4]
 str r1, [r2, #8]
 
-mov r0, #0 
+
+
+.equ gpAiScriptCurrent, 0x30017D0 
+ldr r0, =gpAiScriptCurrent
+ldr r0, [r0] 
+mov r1, #255 @ safety 
+strb r1, [r0, #2] @ safety 
+
+
+ldr r0, =0x803CE18 
+mov lr, r0 
+ldr r0, =0x3004E50 
+ldr r0, [r0] 
+add r0, #0x45
+.short 0xf800 
+
+ldr r2, =AiDecision 
+ldr r0, [r2] 
+cmp r0, #0 
+beq BreakWall 
+mov r0, #1 
+
 
 BreakWall: @ returns 1 true or 0 false 
 pop {r4} 

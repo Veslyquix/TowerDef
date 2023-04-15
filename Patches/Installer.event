@@ -3,5 +3,5 @@
 #include "SwapUnitID/Installer.event" 
 #include "ModularGoalWindow/Installer.event" 
 #include "RNGRandomizer/Installer.event" 
-
+#include "GenericPortraitFixes/Installer.event" 
 

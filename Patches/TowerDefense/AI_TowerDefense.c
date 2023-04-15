@@ -142,7 +142,12 @@ int BuildAiUnitListAll(void)
 #define UNIT_IS_VALID(aUnit) ((aUnit) && (aUnit)->pCharacterData)
 void RefreshFaction(int faction) {
     int i;
+    for (i = faction + 1; i < faction + 0x40; ++i) {
+        struct Unit* unit = GetUnit(i);
 
+        if (UNIT_IS_VALID(unit))
+            unit->state = unit->state &~ (US_UNSELECTABLE | US_HAS_MOVED | US_HAS_MOVED_AI);
+    }
     if (faction == 0) { // blue 
         int i;
 
@@ -159,15 +164,11 @@ void RefreshFaction(int faction) {
                 continue;
 
             PidStatsSubFavval08(unit->pCharacterData->number);
+			unit->ai2 = 3; // do not move 
         }
     }
 
-    for (i = faction + 1; i < faction + 0x40; ++i) {
-        struct Unit* unit = GetUnit(i);
 
-        if (UNIT_IS_VALID(unit))
-            unit->state = unit->state &~ (US_UNSELECTABLE | US_HAS_MOVED | US_HAS_MOVED_AI);
-    }
 }
 
 

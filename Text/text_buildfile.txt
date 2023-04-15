@@ -1,13 +1,13 @@
 # 0x2bf
 Wall[X]
 # 0x3F9 
-100 Gold[X]
-# 0x3FA 
-250 Gold[X]
-# 0x3FB 
 500 Gold[X]
-# 0x3FC 
+# 0x3FA 
 750 Gold[X]
+# 0x3FB 
+1500 Gold[X]
+# 0x3FC 
+2500 Gold[X]
 # 0x3FD 
 1000 Gold[X]
 # 0x400 

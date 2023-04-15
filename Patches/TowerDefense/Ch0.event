@@ -9,18 +9,88 @@ BYTE  $58 $79 $00 $28 $03 $D0 $C0 $46 $04 $49 $8E $46 $00 $F8 $18 $BC $98 $46 $A
 
 PUSH 
 
+ORG $3E320 
+SHORT $4770 // bx lr for FillAiDangerMap 
+
+ORG 0x114FA
+BYTE 45	// frames to show "got item" popup by Vesly 
+ORG 0x1166C
+BYTE 45	
+
+ORG $39e92 
+SHORT $46c0 $46c0 // never display cursor by Vesly 
+ORG $39EAE 
+BYTE 0
+ORG $39Eb1 
+BYTE $DB // to stop it from doing even 1 frame 
+
+// speed for battle map anim rounds by Vesly 
+// just from the proc MapAnimBattle 9A49FC
+// vanilla is 30 30 30 10 30 
+ORG $9A4A06 
+BYTE 10 
+ORG $9A4A16 
+BYTE 15 
+ORG $9A4A26 
+BYTE 10 
+ORG $9A4A36
+BYTE 5 
+ORG $9A4A46
+BYTE 15  
+
+ORG $7BCE2 // double speed of vuln animation by 7743 
+BYTE 0x08 0x34 0x24 0x04 0x24 0x0c 0x00 0x00 0x00 0x00 0x8c 0x42 0x09 0xda
+
+ORG 0x05EF50 // Flux speed 25 frames - 7743 
+BYTE 0x02
+ORG 0x05EF5C 
+BYTE 0x2A
+ORG 0x05EF72 
+BYTE 0x2B
+ORG 0x05EF84 
+BYTE 0x3E
+ORG 0x05EFAA 
+BYTE 0x52
+ORG 0x05EFBA 
+BYTE 0x5E
+ORG 0x05EFEA 
+BYTE 0x7E
+
+
+ORG $9A50AE // from this proc 9A508C - by  Vesly 
+BYTE 30 // default 50 Frames to wait during poison anim before hp drains 
+ORG $9A50BE 
+BYTE 15 // default 30 frames before hp bar disappears 
+ORG $9A50CE 
+BYTE 5 // default 44 frames to wait before going to the next unit 
+
+
+// battle bg fade in 7743 
+ORG 0x560A6
+BYTE 0x00 0x00 0x00 0x00
+
+ORG 0x560BA
+BYTE 0x00 0x00
+
+// gray fade in 
+ORG 0x55D04
+BYTE 0x01 0x20
+
+ORG 0x563AA
+BYTE 0x90 0x1C
+ORG 0x56448
+BYTE 0x0E 0xDB
+
+// zoom up 
+ORG 0x5B9CF4
+BYTE 0x13 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x13 0x00 0x00 0x00 0x00 0x00 0x00 0x00
+ORG 0x5649C
+BYTE 0x70 0x47
+
 // Battle anims off - always use portrait id 1 (for leveling up)
 // by Tequila  
-ORG 0x7F264 
-BYTE 0x01 0x21 
-
-  // Remove portrait from promotion screen by Tequila 
-ORG $073DD0 
-BYTE $C0 $46 $C0 $46 
-
-// Show class instead of unit during no anims battle preview 
-ORG $7BEAE 
-SHORT 0x6840 
+//ORG 0x7F264 
+//BYTE 0x01 0x21 
 
 // Enemy Phase banner 
 ORG $59FA4C
@@ -92,7 +162,7 @@ POP
 
 ALIGN 4 
 Enemy_NumberOfEntries: 
-WORD 7 
+WORD 14 
 
 ALIGN 4 
 TableOfEnemiesToLoad: 
@@ -104,7 +174,14 @@ POIN EnemyMagic
 POIN EnemyLance 
 POIN EnemySword 
 POIN EnemyAxe 
-POIN EnemyWeak 
+POIN EnemyWeak2 
+POIN EnemyMonster2 
+POIN EnemyMelee2 
+POIN EnemyMagic2 
+POIN EnemyLance2 
+POIN EnemySword2 
+POIN EnemyAxe2 
+POIN EnemyWeak2 
 
 EventPointerTable(0x7, PointerList)
 
@@ -134,8 +211,9 @@ POIN $0 $0 $0
 POIN BeginningScene EndingScene
 
 TurnBasedEvents:
-TurnEventPlayer(0, ReinforcementsEvent, 1, 20) 
-TurnEventPlayer(3, EndingScene, 21, 0) 
+TurnEventPlayer(0, ReinforcementsEvent, 1, 10) 
+TurnEventPlayer(3, EndingScene, 11, 1) 
+TurnEventPlayer(7, LoadAllUnits, 255, 0) 
 END_MAIN
 
 CharacterBasedEvents:
@@ -161,13 +239,17 @@ Tutorial:
 END_MAIN
 
 Units1:
-UNIT Eirika  0x37 1 Level(1, Ally, False)   [13,3] 0b 0x0 0x0 0x0 [IronLance] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT Eirika  0x37 1 Level(1, Ally, False)   [13,3] 0b 0x0 0x0 0x0 [IronLance, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 
 // for every 2 players, load 1 reinforcement 
 ReinforcementsEvent: 
 ASMC CountHalfPlayers //(half + 1) 
 SADD s7 sC s0 // save to s7 
+CHECK_TURNS 
+SVAL s1 2 
+SDIV sC sC s1 
+SADD s7 s7 sC // half players + 1 + (turns/3)  
 COUNTER_SET 0 0 
 LABEL 0 
 ASMC PutRandomEnemyIntoMemSlot2
@@ -188,6 +270,36 @@ ENDA
 #define SwordEnemy 0x25 
 #define AxeEnemy 0x26 
 
+LoadAllUnits: 
+LOAD1 1 EnemyWeak
+LOAD1 1 EnemyMonster 
+LOAD1 1 EnemyMelee 
+LOAD1 1 EnemyMagic 
+LOAD1 1 EnemyLance 
+LOAD1 1 EnemyAxe 
+LOAD1 1 EnemySword 
+LOAD1 1 EnemyWeak2 
+LOAD1 1 EnemyMonster2 
+LOAD1 1 EnemyMelee2 
+LOAD1 1 EnemyMagic2 
+LOAD1 1 EnemyLance2 
+LOAD1 1 EnemyAxe2 
+LOAD1 1 EnemySword2 
+LOAD1 1 FighterUnitGroup 
+LOAD1 1 KnightUnitGroup 
+LOAD1 1 MyrmidonUnitGroup
+LOAD1 1 ArcherUnitGroup
+LOAD1 1 CavalierUnitGroup
+LOAD1 1 PegasusUnitGroup
+LOAD1 1 WyvernUnitGroup
+LOAD1 1 ManaketeUnitGroup
+LOAD1 1 MageUnitGroup
+LOAD1 1 ShamanUnitGroup
+LOAD1 1 MonkUnitGroup 
+LOAD1 1 ClericUnitGroup 
+ENUN 
+NoFade 
+ENDA 
 
 
 EnemyWeak:
@@ -217,10 +329,38 @@ EnemyAxe:
 UNIT 0x92 AxeEnemy 1 Level(1, Enemy, True)   [1,0] 1b 0x0 0x1 REDA1R0 [0x0,0x0,0x0,0x0] [0xC, 0xE, 4, 0] // Attack adjacent, if not Attack walls 
 UNIT 
 
+EnemyWeak2:
+UNIT 0x92 WeakEnemy 1 Level(1, Enemy, True)   [0,5] 1b 0x0 0x1 REDA0R5 [0x0,0x0,0x0,0x0] [0xC, 0xE, 4, 0] // Attack adjacent, if not Attack walls 
+UNIT 
+
+
+EnemyMonster2:
+UNIT 0x92 MonsterEnemy 1 Level(1, Enemy, True)   [0,5] 1b 0x0 0x1 REDA0R5 [0x0,0x0,0x0,0x0] [0xC, 0xE, 4, 0] // Attack adjacent, if not Attack walls 
+UNIT 
+
+EnemyMelee2:
+UNIT 0x92 MeleeEnemy 1 Level(1, Enemy, True)   [0,5] 1b 0x0 0x1 REDA0R5[0x0,0x0,0x0,0x0] [0xC, 0xE, 4, 0] // Attack adjacent, if not Attack walls 
+UNIT 
+
+
+EnemyMagic2:
+UNIT 0x92 MageEnemy 1 Level(1, Enemy, True)   [0,5] 1b 0x0 0x1 REDA0R5 [0x0,0x0,0x0,0x0] [0xC, 0xE, 4, 0] // Attack adjacent, if not Attack walls 
+UNIT 
+EnemyLance2: 
+UNIT 0x92 LanceEnemy 1 Level(1, Enemy, True)   [0,5] 1b 0x0 0x1 REDA0R5 [0x0,0x0,0x0,0x0] [0xC, 0xE, 4, 0] // Attack adjacent, if not Attack walls 
+UNIT 
+EnemySword2: 
+UNIT 0x92 SwordEnemy 1 Level(1, Enemy, True)   [0,5] 1b 0x0 0x1 REDA0R5 [0x0,0x0,0x0,0x0] [0xC, 0xE, 4, 0] // Attack adjacent, if not Attack walls 
+UNIT 
+EnemyAxe2: 
+UNIT 0x92 AxeEnemy 1 Level(1, Enemy, True)   [0,5] 1b 0x0 0x1 REDA0R5 [0x0,0x0,0x0,0x0] [0xC, 0xE, 4, 0] // Attack adjacent, if not Attack walls 
+UNIT 
 
 
 REDA1R0:
 REDA [1,0] 0 0 0 0
+REDA0R5:
+REDA [0,5] 0 0 0 0
 
 Traps1:
 ENDTRAP
@@ -231,6 +371,7 @@ ENDTRAP
 ALIGN 4
 
 BeginningScene:
+ENUT 7 
 ENUT 0x1 //no more boss quotes
 ENUT 0x2 //no more death quotes
 LOAD1 0x0 Units1 
@@ -247,7 +388,7 @@ ENDA
 
 EndingScene:
 ASMC 0x85C71 0x381F5 0x37CF9 //show records screen
-STAL 120
+FADI 8 
 EVBIT_F 0x2
 MNTS 0x1 //return to title screen
 NoFade
@@ -405,10 +546,10 @@ REDA [20,20] 0 0 0 0
 
 // Fighter: LifetakerID 
 // Knight: WaryFighterID 
-// Myrmidon: VantageID 
+// Myrmidon: SpeedTakerID or Vantage 
 // Archer: DoubleLionID 
 
-// Cavalier: ChargeID 
+// Cavalier: StrTakerID or ChargeID 
 // PegasusKnight: MageSlayerID
 // WyvernRider: SavageBlow 
 // Manakete: HeroesLifeAndDeathID 
@@ -422,43 +563,43 @@ REDA [20,20] 0 0 0 0
 
 ALIGN 4 
 FighterUnitGroup:
-UNIT 0x40 Fighter  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronAxe] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 Fighter  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronAxe, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 KnightUnitGroup:
-UNIT 0x40 Knight  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronLance] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 Knight  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronLance, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 MyrmidonUnitGroup:
-UNIT 0x40 Myrmidon  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronSword] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 Myrmidon  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronSword, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 ArcherUnitGroup:
-UNIT 0x40 Archer  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronBow] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 Archer  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronBow, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 
 CavalierUnitGroup:
-UNIT 0x40 Cavalier  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronLance, IronSword] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 Cavalier  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronLance, IronSword, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 PegasusUnitGroup:
-UNIT 0x40 PegasusKnight  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronLance] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 PegasusKnight  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronLance, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 WyvernUnitGroup:
-UNIT 0x40 WyvernRider  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronLance] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 WyvernRider  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [IronLance, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 ManaketeUnitGroup:
-UNIT 0x40 0x3B  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [0x90, 0xAD] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 0x3B  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [0x90, 0xAD, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 
 
 MageUnitGroup:
-UNIT 0x40 Mage  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [Fire] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 Mage  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [Fire, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 MonkUnitGroup:
-UNIT 0x40 Monk  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [Light] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 Monk  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [Lightning, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 ShamanUnitGroup:
-UNIT 0x40 Shaman  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [Flux] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 Shaman  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [Flux, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 ClericUnitGroup:
-UNIT 0x40 Cleric  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [Heal] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT 0x40 Cleric  1 Level(1, Ally, False)   [20,20] 0b 0x0 0x1 REDA20R20 [Heal, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
 
 

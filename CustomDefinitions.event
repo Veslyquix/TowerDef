@@ -5,8 +5,6 @@
 #define ChapterTileAnims(chapter, anim1, anim2) "PUSH; ORG 0x8b0890 + (148* chapter) + 9; BYTE anim1 anim2; POP"
 // 
 
-PROTECT $23314 
-PROTECT $2D7D8
 #define EnemyCavalier 6 
 #define EnemyKnight 0xA 
 #define EnemyMercenary 0x10 

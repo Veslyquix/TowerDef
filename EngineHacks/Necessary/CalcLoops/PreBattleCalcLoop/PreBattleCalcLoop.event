@@ -20,6 +20,9 @@ ALIGN 4
 BtlLoopList:
 POIN BC_DefRes BC_Power BC_ASpd BC_Hit BC_Avo BC_Crit CritUpSkill BC_Dodge BC_Support BC_WRank BC_Status //these are the existing battle calculation routines
 POIN InitializePreBattleLoop
+POIN MageSlayer
+POIN LifeAndDeath 
+/*
 POIN Lull //This is effectively a stat modifier routine, so it has to go first
 POIN FaireCheck HolyAura
 POIN BreakerCheck MageSlayer
@@ -43,6 +46,7 @@ POIN UpWithArch
 POIN AxefaithHit
 POIN StancesASM
 POIN AirRaidSkillCheck
+*/ 
 #ifdef ENABLE_GBA_LETHALITY
 POIN LethalitySkill 
 #else
