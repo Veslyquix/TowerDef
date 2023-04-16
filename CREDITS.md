@@ -1,8 +1,8 @@
-Cyclops portrait - L95 
-Autosave turn - 7743, aera, FE8Girls 
-TileChangeCondition - 7743 
-RNGRandomizer - TR143 
-SkipOpening - 7743 
+- Cyclops portrait - L95 
+- Autosave turn - 7743, aera, FE8Girls 
+- TileChangeCondition - 7743 
+- RNGRandomizer - TR143 
+- SkipOpening - 7743 
 
 Note: This list is incomplete and insufficiently organized. If you contributed
 something that you'd like special recognition for, please make a pull request
