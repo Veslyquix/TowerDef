@@ -18,6 +18,7 @@ PROTECT $15478
     #include "EngineHacks/_MasterHackInstaller.event"
     MESSAGE Used hax space ends at currentOffset
 
+#include "Gfx/Installer.event" 
 	//#ifdef USE_TEST_MAP
     ////Events
     //#include "Events/Release_map.event"

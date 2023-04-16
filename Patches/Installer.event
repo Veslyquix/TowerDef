@@ -4,4 +4,4 @@
 #include "ModularGoalWindow/Installer.event" 
 #include "RNGRandomizer/Installer.event" 
 #include "GenericPortraitFixes/Installer.event" 
-
+#include "SkipChIntro/Installer.event" 

@@ -7,16 +7,6 @@
 .thumb
 ldr r4, =0x203a4ec
 push {r4-r7}
-
-mov r5, r12 @ dfdr 
-ldr r0, SkillTester 
-mov lr, r0 
-mov r0, r5 @ defender 
-ldr r1, CounterUncounterableID
-.short 0xf800 
-cmp r0, #0 
-bne Normal @ inner focus means they can always counter 
-
 @original stuff
 mov r5, r12
 ldr r0, [r4, #0x4c]
@@ -47,6 +37,15 @@ beq Normal @if not, we can counter
 
 
 Uncounterable:
+
+ldr r0, SkillTester 
+mov lr, r0 
+mov r0, r5 @ defender 
+ldr r1, CounterUncounterableID
+.short 0xf800 
+cmp r0, #0 
+bne Normal @ CoutnerUncoutnerable means they can always counter 
+
 mov r3, r5
 pop {r4-r7}
 ldr r1, =0x802c877

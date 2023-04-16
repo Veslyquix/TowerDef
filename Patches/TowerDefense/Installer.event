@@ -2,11 +2,12 @@
 	#define callHackNew(offset) 		"BYTE $01 $4B $9E $46 $00 $F8 $01 $E0; POIN (offset|0x1); PROTECT CURRENTOFFSET-12 CURRENTOFFSET-1"
 #endif 
 
+#include "_FE8EssentialFixes.event" 
 #include "AI_TowerDefense.lyn.event" 
 #include "Ch0_Map.event"  
 #include "Ch0.event" 
 
-#include "_FE8EssentialFixes.event" 
+
 #include "TileCallEvent/Installer.event" 
 #include "ResetPlayerCoordHook.lyn.event" 
 

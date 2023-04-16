@@ -89,8 +89,8 @@ BYTE 0x70 0x47
 
 // Battle anims off - always use portrait id 1 (for leveling up)
 // by Tequila  
-//ORG 0x7F264 
-//BYTE 0x01 0x21 
+ORG 0x7F264 
+BYTE 0x01 0x21 
 
 // Enemy Phase banner 
 ORG $59FA4C
@@ -201,8 +201,52 @@ BYTE  $40;
 ORG $02ABFF
 BYTE  $08;
 
+// Anim for Cyclops Axe 
 ORG $8AF5CA
 BYTE $AF 
+
+ORG $9ECD4C
+BYTE 0xD0 // Cyclops boss 
+
+
+// autosave start of turn 
+ORG 0x1c89e
+BYTE  0x00 0x00 0x00 0x00
+ORG 0x1d22c
+BYTE  0x00 0x00 0x00 0x00
+ORG 0x2CDDE
+BYTE  0x00 0x00 0x00 0x00
+
+ORG 0x31F06
+BYTE  0x00 0x00 0x00 0x00
+ORG 0x377A2
+BYTE  0x00 0x00 0x00 0x00
+ORG 0x39af4
+BYTE  0x00 0x00 0x00 0x00
+
+ORG 0x154F6
+BYTE  0x23 0x48 0xC0 0x7B 0x00 0x28 0x05 0xD1 0x0F 0x49 0x09 0x20 0x88 0x75 0x03 0x20 0x90 0xF0 0x9F 0xFA 0x00 0xBD
+
+//ActionData@gActionData.suspendPointType = 9 にするために、この値を参照できるようにする
+//ORG	0x015534  //J
+ORG 0x015510      //U
+SHORT	$481C	//ldr	r0, [$080155a8]
+
+//ORG	0x015560
+ORG	0x01553C
+//WORD	$0203A954
+WORD $0203A958
+
+ORG $80B8DC 
+BYTE 255 // Mountain cost for Cyclops 
+ORG $80B85A
+BYTE 255 // Mountain Cost for general units 
+
+ORG $9A2FB0 // mms table recruit -> soldier 
+WORD 0x81ED418
+
+//ORG $5A83A1 // Accept healing by Vesly 
+//BYTE 50 // Percentage of health to accept staff healing at when not in recovery mode, I guess 
 
 POP 
 
@@ -233,16 +277,16 @@ POIN EnemyWeak2
 EventPointerTable(0x7, PointerList)
 
 //setText(0x15F, GateName)
-//setText(0x160, NewChName)
+setText(0x160, NewChName)
 //
 //ALIGN 4
 //GateName:
 //String("Gate")
 //BYTE 0
-//ALIGN 4
-//NewChName:
-//String("TowerDefense")
-//BYTE 0
+ALIGN 4
+NewChName:
+String("Renais")
+BYTE 0
 
 ALIGN 4
 PointerList:
@@ -287,8 +331,12 @@ Tutorial:
 END_MAIN
 
 Units1:
-UNIT Eirika  0x37 1 Level(1, Ally, False)   [13,3] 0b 0x0 0x0 0x0 [IronLance, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
+UNIT Eirika  0x37 1 Level(1, Ally, False)   [1,0] 0b 0x0 0x1 REDA13R3 [IronLance, Vulnerary] [0x0, 0x3, 0x4, 0x0] // do not move, do not retreat 
 UNIT 
+
+REDA13R3: 
+REDA [13,3] 0 1 0 0
+WORD 0 
 
 // for every 2 players, load 1 reinforcement 
 ReinforcementsEvent: 
@@ -434,16 +482,27 @@ ALIGN 4
 
 BeginningScene:
 ENUT 7 
-ENUT 0x1 //no more boss quotes
-ENUT 0x2 //no more death quotes
+//FADU 8
+ASMC 0x8026629 
+//LoadMapSpritePalettes, 0x8026629
 LOAD1 0x0 Units1 
 ENUN
 EVBIT_MODIFY 3 // no scene skipping, but can skip text 
-FADU 8
-TutText(IntroText) 
 
+TEXTSTART 
+TEXTSHOW IntroDialogue
+TEXTEND 
 SVAL s3 5000 
 GIVEITEMTOMAIN 0
+ASMC 0x80043E9 // reset font 
+TEXTCONT 
+TEXTEND 
+REMA 
+
+
+TutText(IntroText) 
+
+
 
 NoFade 
 ENDA 
@@ -524,8 +583,8 @@ SVAL s7 1
 BEQ 31 sC s7 
 SVAL s7 2 
 BEQ 32 sC s7 
-SVAL s7 3 
-BEQ 33 sC s7 
+//SVAL s7 3 
+//BEQ 33 sC s7 
 GOTO 99
 
 LABEL 10 // Fighter 

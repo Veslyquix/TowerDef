@@ -1,3 +1,6 @@
+# 0x917 
+[OpenMidLeft][LoadFace][0x48][0x01][OpenMidLeft]Raaarrrgg..?[A][X]
+
 # 0x2bf
 Wall[X]
 # 0x3F9 
@@ -200,8 +203,23 @@ are no enemies left, so watch out![A][Clear]
 If your castle is destroyed or all[N]
 your units die, you lose.[A][Clear]
 Enemies are randomized.[N]
-Please enjoy.[A][X]
+Please enjoy.[N]
+- Vesly[A][X]
 
 ## MGWTurnText
 Turn[X]
+
+
+## IntroDialogue 
+[OpenMidLeft][LoadFace][0x6A][0x01][OpenMidRight][LoadFace][0x51][0x01][OpenMidLeft]Sir! We are under attack![A][N]
+[OpenMidRight]Eh, we're alright.[N]
+We've got you on guard.[A][N]
+[OpenMidLeft]But sir, a Cyclops has[N]
+been repo-[A][N]
+[OpenMidRight]Fine, whatever.[N]
+Rally some troops.[A][N]
+[OpenMidLeft]M-me, sir?[A][N]
+[OpenMidRight]Take this. I'm going to nap.[A][CloseSpeechSlow][OpenMidRight][ClearFace][N][LoadOverworldFaces]
+[OpenMidLeft][MoveLeft]It's my big day...[A][N]
+I think I'm going to be sick..[A][X]
 

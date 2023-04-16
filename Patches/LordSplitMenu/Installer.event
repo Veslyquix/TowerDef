@@ -92,7 +92,7 @@ MageUnitsMenu:
 	EventMenuCommand(BuyMage)
 	EventMenuCommand(BuyMonk)
 	EventMenuCommand(BuyShaman)
-	EventMenuCommand(BuyCleric)
+	//EventMenuCommand(BuyCleric)
 	EventMenuCommand(ExitText)
 EventMenuCommandEnd
 

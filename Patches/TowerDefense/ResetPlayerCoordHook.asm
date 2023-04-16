@@ -101,10 +101,20 @@ bx r0
 .type MaybeClearNextAIActor, %function 
 MaybeClearNextAIActor:
 push {r4-r6, lr} 
+
+ldr r3, =gCurrentUnit 
+ldr r3, [r3] 
+ldr r3, [r3] @ char 
+ldr r2, =0x8806770
+cmp r2, r3 
+bne NoBreak 
+mov r11, r11 
+NoBreak: 
+
 ldr r3, =0x202BCF0 @ gChData 
 ldrb r0, [r3, #0x0F] 
 cmp r0, #0 
-beq Exit_ClearNextAi 
+beq Exit_ClearNextAi @ do nothing on player phase 
 ldr r0, =0x203A56C
 ldr r1, =0x8807164 
 ldr r0, [r0] 
@@ -122,12 +132,15 @@ ldrb r0, [r5]
 cmp r0, #0 
 beq MakeNewList 
 
-ldr r6, =0x1000C @ escaped, undeployed, dead 
+ldr r6, =0x1000C @ escaped, undeployed, dead
+@ldr r6, =0x1000E @ escaped, undeployed, dead, acted
 ClearStuffLoop: 
 cmp r5, r4 
 @bgt Exit_ClearNextAi 
 bgt MakeNewList 
 ldrb r0, [r5] 
+cmp r0, #0 
+beq MakeNewList 
 blh GetUnit 
 cmp r0, #0 
 beq NextClearLoop
@@ -191,6 +204,7 @@ pop {r1}
 bx r1 
 .ltorg 
 
+.equ AiScriptCmd_0C_MoveTowardsSetPoint, 0x803CB88
 .equ gCurrentUnit, 0x3004E50 
 .equ AiDecision, 0x203AA94
 .global TryBreakWall
@@ -221,9 +235,13 @@ b BreakWall
  
 
 DontBreakWall: 
+
+
 mov r0, #0xE
-add r3, #0x45 @ ai2 counter 
-strb r0, [r3] 
+mov r1, #0xD @ move towards gate 
+add r3, #0x44 @ ai2 counter 
+@strb r1, [r3] 
+strb r0, [r3, #1] 
 
 
 ldr r2, =AiDecision 
@@ -235,13 +253,41 @@ str r1, [r2, #8]
 
 
 .equ gpAiScriptCurrent, 0x30017D0 
+
+@ move towards enemies 
+@ldr r0, =gpAiScriptCurrent
+@ldr r0, [r0] 
+@mov r1, #255 @ safety 
+@strb r1, [r0, #2] @ safety 
+@
+@
+@ldr r0, =0x803CE18 
+@mov lr, r0 
+@ldr r0, =0x3004E50 
+@ldr r0, [r0] 
+@add r0, #0x45
+@.short 0xf800 
+@
+@mov r0, #1 
+@ldr r2, =AiDecision 
+@ldrh r2, [r2, #2] @ xxyy 
+@ldr r3, =gCurrentUnit 
+@ldr r3, [r3] 
+@ldrh r1, [r3, #0x10] 
+@cmp r2, r1 
+@bne BreakWall 
+
+
 ldr r0, =gpAiScriptCurrent
 ldr r0, [r0] 
 mov r1, #255 @ safety 
 strb r1, [r0, #2] @ safety 
+mov r1, #13 
+mov r2, #3 @ beside gate 
+strb r1, [r0, #1] @ xx 
+strb r2, [r0, #3] @ yy 
 
-
-ldr r0, =0x803CE18 
+ldr r0, =AiScriptCmd_0C_MoveTowardsSetPoint 
 mov lr, r0 
 ldr r0, =0x3004E50 
 ldr r0, [r0] 
@@ -249,9 +295,11 @@ add r0, #0x45
 .short 0xf800 
 
 ldr r2, =AiDecision 
-ldr r0, [r2] 
-cmp r0, #0 
-beq BreakWall 
+mov r0, #5 @ staff 
+strb r0, [r2] 
+strb r0, [r2, #0x0B] @ action taken 
+
+
 mov r0, #1 
 
 

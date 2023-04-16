@@ -4,7 +4,6 @@ ALIGN 4
 CyclopsBossSkillList:
 BYTE 21 CounterUncounterableID
 BYTE 21 DragonskinID
-BYTE 21 GrislyWoundID 
 // WaryFighterID ? 
 BYTE 00 00
 ALIGN 4
