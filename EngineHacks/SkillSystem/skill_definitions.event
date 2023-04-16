@@ -709,7 +709,7 @@
 
 //Dragonskin: Halve damage taken
 //By Jopettajah
-#define DragonSkinID 255
+#define DragonSkinID 13
 #define DragonskinID DragonSkinID //Alias
 
 //Stunning Smile: If foe is male, inflicts Avo-20 on that foe during combat.
@@ -729,7 +729,7 @@
 
 //Aether: First strike absorbs HP, second strike negates defenses. (Skill/2 % activation)
 //Author Unknown (Initial Commit)
-#define AetherID 13
+#define AetherID 255
 
 //Astra: 5 attacks at half damage. (Skill % activation)
 //Author Unknown (Initial Commit)
@@ -886,11 +886,14 @@
 
 //Armsthrift: Luck % chance to not consume weapon durability.
 //Author Unknown (Initial Commit)
-#define ArmsthriftID 138
+#define ArmsthriftID 255
 
 //Dazzle: Opponents cannot counterattack this unit.
 //By circleseverywhere
 #define DazzleID 140
+
+// CounterUncounterable: This unit can always counterattack. 
+#define CounterUncounterableID 138 
 
 //Desperation: If HP < 50%, double attacks occur immediately.
 //By ??? (Initial Commit)

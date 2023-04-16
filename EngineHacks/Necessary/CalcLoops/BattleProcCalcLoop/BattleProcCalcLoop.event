@@ -5,7 +5,7 @@
 ProcLoopParent:
 #incbin "ProcLoop/proc_loop.dmp"
 POIN Proc_Start	//start
-
+//POIN Proc_CounterUncounterable
 POIN Proc_Devil	//devil effect
 
 

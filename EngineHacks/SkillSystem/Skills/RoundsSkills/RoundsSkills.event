@@ -29,6 +29,7 @@ DazzleCheck:
 POIN SkillTester
 WORD DazzleID
 WORD MoonlightID
+WORD CounterUncounterableID
 
 ALIGN 4
 Desperation:

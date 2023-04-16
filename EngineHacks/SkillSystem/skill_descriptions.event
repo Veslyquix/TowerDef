@@ -371,5 +371,4 @@ SkillDescription(AirRaidResID,SD_AirRaidRes)
 SkillDescription(ChaosStyleID,SD_ChaosStyle)
 SkillDescription(DragonskinID,SD_Dragonskin)
 SkillDescription(StunningSmileID,SD_StunningSmile)
- 
- 
+SkillDescription(CounterUncounterableID,SD_CounterUncounterable)

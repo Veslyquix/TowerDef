@@ -165,6 +165,7 @@ void RefreshFaction(int faction) {
 
             PidStatsSubFavval08(unit->pCharacterData->number);
 			unit->ai2 = 3; // do not move 
+			unit->ai3And4 = 4; // do not heal 
         }
     }
 

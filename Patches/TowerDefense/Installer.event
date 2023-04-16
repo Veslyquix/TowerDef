@@ -13,6 +13,8 @@
 #include "Extensions/AI Assembly.txt" 
 
 PUSH 
+ORG $2A8BC
+callHackNew(CounterUncounterable_3)
 ORG $39F10 
 callHackNew(SavePlayerCoord)
 ORG $3A620 // in proc CpPerform LoopRoutine WaitAction 

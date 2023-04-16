@@ -261,6 +261,64 @@ pop {r1}
 bx r1 
 .ltorg 
 
+ @ at 2A8C4 does bl Can_Attack_Target 801ACFC 
+
+.global P_CounterUncounterable
+.type P_CounterUncounterable, %function 
+P_CounterUncounterable: 
+push {r4-r7, lr} 
+mov r4, r0 @attacker
+mov r5, r1 @defender
+mov r6, r2 @battle buffer
+mov r7, r3 @battle data
+
+mov r0, r5 @ unit 
+ldr r1, =CounterUncounterableID
+lsl r1, #24 
+lsr r1, #24 
+bl SkillTester 
+cmp r0, #0 
+beq ExitP_CounterUncounterable
+mov r0, #1 
+mov r1, #0x52 
+add r1, r5  
+strb r0, [r1] @ s8 canCounter 
+
+ExitP_CounterUncounterable: 
+pop {r4-r7} 
+pop {r0} 
+bx r0 
+.ltorg 
+
+.equ Defender, 0x203a56c @ defender 
+.equ gBattleStats, 0x203A4D4 
+.equ Can_Attack_Target, 0x801ACFC 
+.global CounterUncounterable_3
+.type CounterUncounterable_3, %function 
+CounterUncounterable_3: 
+push {lr} 
+
+ldr r3, =Defender 
+cmp r3, r5 
+bne Vanilla_CounterUncounterable 
+mov r0, r5 @ unit 
+ldr r1, =CounterUncounterableID
+lsl r1, #24 
+lsr r1, #24 
+bl SkillTester 
+cmp r0, #0 
+bne ExitCounterUncounterable_3 
+
+Vanilla_CounterUncounterable: 
+ldrh r0, [r4] 
+ldr r1, =gBattleStats 
+ldrb r1, [r1, #2] 
+mov r2, r5 
+blh Can_Attack_Target 
 
 
+ExitCounterUncounterable_3: 
+pop {r3} 
+bx r3 
+.ltorg 
 

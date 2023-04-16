@@ -1,11 +1,22 @@
 @802c874 checks uncounterable
 .equ DazzleID, SkillTester+4
 .equ MoonlightID, DazzleID+4
+.equ CounterUncounterableID, MoonlightID+4 
 @jumptohack at 802c864
 
 .thumb
 ldr r4, =0x203a4ec
 push {r4-r7}
+
+mov r5, r12 @ dfdr 
+ldr r0, SkillTester 
+mov lr, r0 
+mov r0, r5 @ defender 
+ldr r1, CounterUncounterableID
+.short 0xf800 
+cmp r0, #0 
+bne Normal @ inner focus means they can always counter 
+
 @original stuff
 mov r5, r12
 ldr r0, [r4, #0x4c]

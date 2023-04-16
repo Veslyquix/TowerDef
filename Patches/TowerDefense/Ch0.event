@@ -157,6 +157,53 @@ BYTE  $10 $00 $24 $00 $00 $DF $01 $DF $05 $FF $01 $FF $05 $00 $DB $01 $DC $01 $F
 ORG $A39768
 BYTE  $20 $10 $01 $00 $20 $C2 $00 $00 $60 $C3 $00 $00 $00 $00 $01 $00 $00 $00 $00 $00 $20 $C1 $00 $00 $20 $01 $00 $00;
 
+//Patches Faster Level Ups (PatchForm) Faster Level Ups2023-04-16 5:57:26 AM
+ORG $07F464
+BYTE  $0A;
+ORG $0741E0
+BYTE  $0B;
+
+//Patches DSFE STYLE AVOID Do NOT double the speed for avoid rate calculation. (PatchForm) DSFE STYLE AVOID Do NOT double the speed for avoid rate calculation.2023-04-16 5:59:03 AM
+ORG $02ABEE
+BYTE  $11;
+ORG $02ABEF
+BYTE  $1C;
+ORG $02ABF0
+BYTE  $57;
+ORG $02ABF1
+BYTE  $31;
+ORG $02ABF2
+BYTE  $09;
+ORG $02ABF3
+BYTE  $78;
+ORG $02ABF4
+BYTE  $09;
+ORG $02ABF5
+BYTE  $06;
+ORG $02ABF6
+BYTE  $09;
+ORG $02ABF7
+BYTE  $16;
+ORG $02ABF8
+BYTE  $09;
+ORG $02ABF9
+BYTE  $18;
+ORG $02ABFA
+BYTE  $19;
+ORG $02ABFB
+BYTE  $20;
+ORG $02ABFC
+BYTE  $10;
+ORG $02ABFD
+BYTE  $56;
+ORG $02ABFE
+BYTE  $40;
+ORG $02ABFF
+BYTE  $08;
+
+ORG $8AF5CA
+BYTE $AF 
+
 POP 
 
 
@@ -211,9 +258,10 @@ POIN $0 $0 $0
 POIN BeginningScene EndingScene
 
 TurnBasedEvents:
-TurnEventPlayer(0, ReinforcementsEvent, 1, 10) 
+TurnEventPlayer(0, ReinforcementsEvent, 1, 9) 
+TurnEventPlayer(0, BossEvent, 10, 1) 
 TurnEventPlayer(3, EndingScene, 11, 1) 
-TurnEventPlayer(7, LoadAllUnits, 255, 0) 
+TurnEventPlayer(7, LoadAllUnits, 255, 1) 
 END_MAIN
 
 CharacterBasedEvents:
@@ -250,6 +298,7 @@ CHECK_TURNS
 SVAL s1 2 
 SDIV sC sC s1 
 SADD s7 s7 sC // half players + 1 + (turns/3)  
+SVAL s8 15 
 COUNTER_SET 0 0 
 LABEL 0 
 ASMC PutRandomEnemyIntoMemSlot2
@@ -257,10 +306,21 @@ LOAD1 1 (-1)
 ENUN 
 COUNTER_ADD 0 1 
 COUNTER_CHECK 0 
+BEQ 99 sC s8 // max 15 enemies to spawn 
 BLT 0 sC s7 
 LABEL 99 
 NoFade 
 ENDA 
+
+BossEvent: 
+LOAD1 1 EnemyCyclops
+ENUN 
+NoFade 
+ENDA 
+
+EnemyCyclops:
+UNIT 0xD0 Cyclops 1 Level(1, Enemy, True)   [1,0] 0b 0x0 0x1 REDA1R0 [KillerAxe,Swordslayer,0x0,0x0] [0xC, 0xE, 4, 0] // Attack adjacent, if not Attack walls 
+UNIT 
 
 #define WeakEnemy 0x20 
 #define MonsterEnemy 0x21 
@@ -271,6 +331,7 @@ ENDA
 #define AxeEnemy 0x26 
 
 LoadAllUnits: 
+GOTO 99 
 LOAD1 1 EnemyWeak
 LOAD1 1 EnemyMonster 
 LOAD1 1 EnemyMelee 
@@ -298,6 +359,7 @@ LOAD1 1 ShamanUnitGroup
 LOAD1 1 MonkUnitGroup 
 LOAD1 1 ClericUnitGroup 
 ENUN 
+LABEL 99 
 NoFade 
 ENDA 
 
